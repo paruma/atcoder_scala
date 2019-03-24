@@ -23,7 +23,6 @@ object MainB {
   }
 
   def main(args: Array[String]): Unit = {
-    val (x,y) = (0,0)
     val (n,m,c,b,a) = read()
     println(solve(n,m,c,b,a))
   }
