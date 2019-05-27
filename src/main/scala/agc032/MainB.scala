@@ -42,7 +42,10 @@ object MainB {
 
   def output(graph: Graph): Unit = {
     println(graph.m)
-    graph.edges.foreach(edge => println(edge.a + " " + edge.b))
+    graph.edges.foreach(edge =>
+      //println(edge.a + " " + edge.b)
+      println(s"${edge.a} ${edge.b}")// s補間子
+    )
   }
 
   def main(args: Array[String]): Unit = {

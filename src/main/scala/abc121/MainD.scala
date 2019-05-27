@@ -8,16 +8,17 @@ object MainD {
 
   def read() = {
     val sc = new Scanner(System.in)
-    val a,b = sc.nextLong()
-    (a,b)
+    val a, b = sc.nextLong()
+    (a, b)
   }
 
   //ナイーブ実装
-  def pow2(n:Int): Long = List.fill(n)(2.toLong).product
+  def pow2(n: Int): Long = List.fill(n)(2.toLong).product
 
-  def solve(a:Long, b:Long):Long= {
-    val nBits = 50//10^12上限だから40くらいで十分
-    val hoge = for (i <- 0 until nBits)yield {
+  def solve(a: Long, b: Long): Long = {
+    val nBits = 50
+    //10^12上限だから40くらいで十分
+    val hoge = for (i <- 0 until nBits) yield {
       // 第i桁目の処理を行う
       val mod = pow2(i + 2)
       val amod = a % mod
@@ -45,7 +46,7 @@ object MainD {
   }
 
   def main(args: Array[String]): Unit = {
-    val (a,b) = read()
-    println(solve(a,b))
+    val (a, b) = read()
+    println(solve(a, b))
   }
 }
