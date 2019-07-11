@@ -1,6 +1,9 @@
-package abc130
+package abc131
 
 import java.util.Scanner
+
+import scala.annotation.tailrec
+import scala.collection.mutable.ArrayBuffer
 
 
 object MainC {
@@ -8,19 +11,35 @@ object MainC {
 
   def read() = {
     val sc = new Scanner(System.in)
-    val w, h, x, y = sc.nextLong()
-    (w, h, x, y)
+    val a, b, c, d = sc.nextLong()
+    (a, b, c, d)
   }
 
-  def solve(w: Long, h: Long, x: Long, y: Long): (Double, Int) = {
-    val area = w.toDouble * h / 2D
-    val flag = if(2 * x == w && 2 * y == h) 1 else 0
-    (area, flag)
+  @tailrec
+  def gcd(x: Long, y: Long): Long = {
+    assert(x >= 0 && y >= 0)
+    if (y == 0) x else gcd(y, x % y)
+  }
+
+  def divCeil(a: Long, b: Long): Long = (a - 1) / b + 1
+
+  def divFloor(a: Long, b: Long): Long = a / b
+
+
+  def solve(a: Long, b: Long, c: Long, d: Long): Long = {
+
+    def nDiv(x: Long) = divFloor(b, x) - divCeil(a, x) + 1
+
+
+    val lcmCD = c / gcd(c, d) * d
+
+    val nDivCorD = nDiv(c) + nDiv(d) - nDiv(lcmCD)
+    (b - a + 1) - nDivCorD
+
   }
 
   def main(args: Array[String]): Unit = {
-    val (w, h, x, y) = read()
-    val result = solve(w, h, x, y)
-    println(s"${result._1} ${result._2}")
+    val (a, b, c, d) = read()
+    println(solve(a, b, c, d))
   }
 }

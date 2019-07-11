@@ -3,14 +3,15 @@ package abc130
 import java.util.Scanner
 
 
-object MainD {
+object MainE {
 
 
   def read() = {
     val sc = new Scanner(System.in)
-    val n = sc.nextInt()
-    val a = IndexedSeq.fill(n)(sc.nextInt())
-    (n, a)
+    val n, m = sc.nextInt()
+    val s = IndexedSeq.fill(n)(sc.nextLong())
+    val t = IndexedSeq.fill(m)(sc.nextLong())
+    (n, m, s, t)
   }
 
   def solve(): Long = {
@@ -18,7 +19,7 @@ object MainD {
   }
 
   def main(args: Array[String]): Unit = {
-    val (n, a) = read()
+    val (n, m, s, t) = read()
     println(solve())
   }
 }

@@ -1,4 +1,4 @@
-package abc132
+package atcoder_template
 
 import java.util.Scanner
 

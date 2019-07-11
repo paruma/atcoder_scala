@@ -1,11 +1,11 @@
-package abc132
+package abc133
 
 import java.util.Scanner
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-
+// 132へ移動
 object MainC {
   def read() = {
     val sc = new Scanner(System.in)

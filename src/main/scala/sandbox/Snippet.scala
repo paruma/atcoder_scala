@@ -54,7 +54,6 @@ object Snippet {
     def inv: GF = GF.powGF(this, GF.mod - 2)
   }
 
-
   object GF {
     val mod: Long = (1e9 + 7).toLong
 
@@ -88,6 +87,7 @@ object Snippet {
 
     final case class NonRoot(parentIndex: Int) extends Node
 
+    // TODO ArrayBufferではなくArrayでいいはず
     private val nodes: ArrayBuffer[Node] = ArrayBuffer.fill(n)(Root(count = 1, rank = 0))
 
     private def rootNode(index: Int): (Int, Root) = {

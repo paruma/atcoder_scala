@@ -1,4 +1,4 @@
-package abc130
+package abc131
 
 import java.util.Scanner
 
@@ -7,9 +7,9 @@ object MainA {
 
   def main(args: Array[String]): Unit = {
     val sc = new Scanner(System.in)
-    val x,a = sc.nextInt()
-    val result = if(x < a) 0 else 10
+    val x = sc.next()
+    val isGood = x(0) != x(1) && x(1) != x(2) && x(2) != x(3)
 
-    println(result)
+    println(if(isGood) "Good" else "Bad")
   }
 }

@@ -12,8 +12,8 @@ fun read(): Triple<Int, Int, Array<String>> {
 
 fun read2(): Triple<Int, Int, Array<String>> {
     val (h, w) = readLine()!!.split(" ").map(String::toInt)
-    val a = Array(h){readLine()!!}
-    return Triple (w, h, a)
+    val a = Array(h) { readLine()!! }
+    return Triple(w, h, a)
 }
 
 

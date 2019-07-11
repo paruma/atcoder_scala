@@ -1,4 +1,4 @@
-package abc130
+package abc131
 
 import java.util.Scanner
 
@@ -8,18 +8,17 @@ object MainE {
 
   def read() = {
     val sc = new Scanner(System.in)
-    val n, m = sc.nextInt()
-    val s = IndexedSeq.fill(n)(sc.nextLong())
-    val t = IndexedSeq.fill(m)(sc.nextLong())
-    (n, m, s, t)
+    val n, k = sc.nextInt()
+    (n, k)
   }
+  // 出力工夫
 
-  def solve(): Long = {
+  def solve(n: Int, k: Int): Long = {
     0
   }
 
   def main(args: Array[String]): Unit = {
-    val (n, m, s, t) = read()
-    println(solve())
+    val (n, k) = read()
+    println(solve(n, k))
   }
 }

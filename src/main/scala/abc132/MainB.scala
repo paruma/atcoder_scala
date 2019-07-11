@@ -1,4 +1,4 @@
-package abc131
+package abc132
 
 import java.util.Scanner
 
@@ -8,23 +8,20 @@ object MainB {
 
   def read() = {
     val sc = new Scanner(System.in)
-    val n, l = sc.nextInt()
-    (n, l)
+    val n = sc.nextInt()
+    val p = IndexedSeq.fill(n)(sc.nextInt())
+    (n, p)
   }
 
-  def solve(n: Int, l: Int): Long = {
-    def aji(i: Int) = l + i - 1
-
-    val sum = (1 to n).map(aji).sum
-    (1 to n).map { i =>
-      // i: 1つだけ食べるりんご
-      val others = sum - aji(i)
-      (math.abs(others - sum), others)
-    }.minBy(_._1)._2
+  def solve(n:Int, p:IndexedSeq[Int]): Long = {
+    (1 to n-2).count { i =>
+      val t = IndexedSeq(p(i - 1), p(i), p(i + 1)).sorted
+      t(1) == p(i)
+    }
   }
 
   def main(args: Array[String]): Unit = {
-    val (n, l) = read()
-    println(solve(n, l))
+    val (n, p) = read()
+    println(solve(n, p))
   }
 }

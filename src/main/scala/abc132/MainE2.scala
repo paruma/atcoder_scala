@@ -6,7 +6,7 @@ import java.util.Scanner
 import scala.collection.mutable.ArrayBuffer
 
 
-object MainE {
+object MainE2 {
 
   case class Edge(from: Int, to: Int)
 
@@ -29,36 +29,31 @@ object MainE {
             start: Int,
             goal: Int): Long = {
     val next1List = IndexedSeq.fill(nVertex)(ArrayBuffer.empty[Int])
-    val next2List = IndexedSeq.fill(nVertex)(ArrayBuffer.empty[Int])
-    val next3List = IndexedSeq.fill(nVertex)(ArrayBuffer.empty[Int])
     for (edge <- edges) {
       next1List(edge.from).append(edge.to)
     }
-    for (v <- 0 until nVertex) {
-      next2List(v).appendAll(next1List(v).flatMap(next1List))
-    }
-    for (v <- 0 until nVertex) {
-      next3List(v).appendAll(next1List(v).flatMap(next2List))
-    }
+    val dist = IndexedSeq.fill(3)(Array.fill(nVertex)(Int.MaxValue / 2))
+    val visited = IndexedSeq.fill(3)(Array.fill(nVertex)(false))
+    dist(0)(start) = 0
+    visited(0)(start) = true
 
-    val dist = Array.fill(nVertex)(Int.MaxValue/2)
-    val visited = Array.fill(nVertex)(false)
-    dist(start) = 0
-    visited(start) = true
-    val queue: util.Queue[Int] = new util.ArrayDeque[Int]()
-    queue.add(start)
+    case class Info(v: Int, mod: Int)
+
+    val queue: util.Queue[Info] = new util.ArrayDeque[Info]()
+    queue.add(Info(start, 0))
 
     while (!queue.isEmpty) {
       val current = queue.remove()
-      for (next <- next3List(current)) {
-        if (!visited(next)) {
-          dist(next) = math.min(dist(next), dist(current) + 1)
-          queue.add(next)
-          visited(next) = true
+      for (next <- next1List(current.v)) {
+        val nextMod = (current.mod + 1) % 3
+        if (!visited(nextMod)(next)) {
+          dist(nextMod)(next) = dist(current.mod)(current.v) + (if (nextMod == 0) 1 else 0)
+          visited(nextMod)(next) = true
+          queue.add(Info(next, nextMod))
         }
       }
     }
-    if (visited(goal)) dist(goal) else -1
+    if (visited(0)(goal)) dist(0)(goal) else -1
   }
 
   def main(args: Array[String]): Unit = {

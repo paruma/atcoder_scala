@@ -1,11 +1,30 @@
 package webtest.yahoo2019
 
-object Main1 {
+object Main2 {
+
+  case class Purchase(date: String, name: String, price: Int, num: Int)
+
   def main(args: Array[String]) {
-    for (ln <- io.Source.stdin.getLines) {
-      val lst = ln.split(" ").map(_.toInt)
-      val result = for (i <- 0 until lst.length / 2) yield lst(2*i+1)
-      println(result.mkString(" "))
+    val lines = io.Source.stdin.getLines()
+    val Array(n, k) = lines.next().split(" ").map(_.toInt)
+    val purchaseList = IndexedSeq.fill(n) {
+      val lineData = lines.next().split(" ")
+      Purchase(
+        lineData(0),
+        lineData(1),
+        lineData(2).toInt,
+        lineData(3).toInt
+      )
     }
+    // --- input終わり
+    val purchaseListGroupByName = purchaseList.groupBy(_.name)
+    val result = purchaseListGroupByName.map { case (name, purchases) =>
+      (name, purchases.map(x => x.price * x.num).sum)
+    }.toIndexedSeq.sortBy(x => (-x._2, x._1))
+    for (i <- 0 until k) {
+      val info = result(i)
+      println(s"${info._1} ${info._2}")
+    }
+
   }
 }

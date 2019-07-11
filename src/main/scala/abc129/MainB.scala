@@ -1,36 +1,29 @@
-package abc128
+package abc129
 
 import java.util.Scanner
 
 
 object MainB {
 
-  case class Info(i: Int, s: String, p: Int)
 
   def read() = {
     val sc = new Scanner(System.in)
     val n = sc.nextInt()
-    /*
-    val infos = IndexedSeq.fill(n){
-      val strs = sc.next().split(" ")
-      Info(strs(0), strs(1).toInt)
-    }
-    */
-    val infos = IndexedSeq.tabulate(n)(i => Info(i + 1, sc.next(), sc.nextInt()))
-
-    (n, infos)
+    val w = IndexedSeq.fill(n)(sc.nextInt())
+    (n, w)
   }
 
-  def solve(n: Int, infos: IndexedSeq[Info]): IndexedSeq[Int] = {
-    val sortedInfos = infos.sortWith{case (info1, info2)=>
-      if(info1.s == info2.s) info1.p >= info2.p
-      else info1.s <= info2.s
-    }
-    sortedInfos.map(_.i)
+  def solve(n: Int, w: IndexedSeq[Int]): Long = {
+    // [0, i), [i, n)
+    (1 until n).map { i =>
+      val s1 = (0 until i).map(w).sum
+      val s2 = (i until n).map(w).sum
+      math.abs(s1 - s2)
+    }.min
   }
 
   def main(args: Array[String]): Unit = {
-    val (n, infos) = read()
-    solve(n, infos).foreach(println)
+    val (n, w) = read()
+    println(solve(n, w))
   }
 }

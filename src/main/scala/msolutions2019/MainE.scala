@@ -3,7 +3,7 @@ package msolutions2019
 import java.util.Scanner
 
 
-object MainD {
+object MainE {
 
 
   def read() = {

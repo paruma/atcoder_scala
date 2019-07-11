@@ -1,42 +1,33 @@
-package abc130
+package abc131
 
 import java.util.Scanner
 
 
 object MainD {
 
+  case class Work(len: Long, end: Long)
+
 
   def read() = {
     val sc = new Scanner(System.in)
     val n = sc.nextInt()
-    val k = sc.nextLong()
-    val a = IndexedSeq.fill(n)(sc.nextLong())
-    (n, k, a)
+    val works = IndexedSeq.fill(n)(Work(sc.nextLong(), sc.nextLong()))
+    (n, works)
   }
 
-  def solve(n: Int, k: Long, a: IndexedSeq[Long]): Long = {
-    val cumSum = a.scanLeft(0L)(_ + _)
-
-    def sumA(begin: Int, end: Int) = cumSum(end) - cumSum(begin)
-
-    //しゃくとり
-    var end = 0
-    val cnt = 0L
-    var sum = 0L
-    for (i <- 0 until n) {
-      //[i, end)で和がkを超えるまで進める
-      while (end < n && sumA(i, end) < k) {
-        end += 1
-      }
-      if (sumA(i, end) >= k) {
-        sum += (n - end + 1)
-      }
+  def solve(n: Int, works: IndexedSeq[Work]): Boolean = {
+    val sortedWorks = works.sortBy(-_.end)
+    val startTime = sortedWorks.foldLeft(Long.MaxValue) { (remainTime, work) =>
+      if (remainTime > work.end) work.end - work.len
+      else remainTime - work.len
     }
-    sum
+
+    startTime >= 0
   }
 
   def main(args: Array[String]): Unit = {
-    val (n, k, a) = read()
-    println(solve(n, k, a))
+    val (n, works) = read()
+    val able = solve(n, works)
+    println(if (able) "Yes" else "No")
   }
 }

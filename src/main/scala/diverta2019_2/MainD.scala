@@ -3,7 +3,7 @@ package diverta2019_2
 import java.util.Scanner
 
 
-object MainC {
+object MainD {
 
 
   def read() = {

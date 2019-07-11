@@ -1,6 +1,6 @@
 package webtest.yahoo2019
 
-object Main {
+object Main1 {
   def main(args: Array[String]) {
     for (ln <- io.Source.stdin.getLines) {
       val lst = ln.split(" ").map(_.toInt)
