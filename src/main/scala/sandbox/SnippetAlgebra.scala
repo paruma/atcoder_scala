@@ -1,7 +1,7 @@
 package sandbox
 
 import scala.annotation.tailrec
-import scala.collection.{GenTraversableLike, GenTraversableOnce}
+import scala.collection.{GenTraversableOnce}
 import scala.collection.generic.CanBuildFrom
 
 object SnippetAlgebra {
@@ -89,32 +89,4 @@ object SnippetAlgebra {
     override def append(x: ResidueRing, y: ResidueRing): ResidueRing = x * y
   }
 
-
-  implicit class MyGenTraversableLike[+A, +Repr](val l: GenTraversableLike[A, Repr]) {
-    def cumSum[B >: A, That](implicit bf: CanBuildFrom[Repr, B, That], num: Numeric[B]): That = l.scanLeft(num.zero)(num.plus)(bf)
-
-    def cumConcatLeft[B >: A, That](monoid: Monoid[B])(implicit bf: CanBuildFrom[Repr, B, That]): That = l.scanLeft(monoid.empty)(monoid.append)(bf)
-
-    def cumConcatRight[B >: A, That](monoid: Monoid[B])(implicit bf: CanBuildFrom[Repr, B, That]): That = l.scanRight(monoid.empty)(monoid.append)(bf)
-  }
-
-  implicit class MyGenTraversableOnce[+A](val l: GenTraversableOnce[A]) {
-    def concat[B >: A](monoid: Monoid[B]): B = l.foldLeft(monoid.empty)(monoid.append)
-  }
-
-  case class IRange(begin: Int, end: Int) {
-    def toIndexedSeq: IndexedSeq[Int] = begin until end
-  }
-
-  case class InstantSubConcatSeq[T](seq: IndexedSeq[T])(group: Group[T]) {
-    private val cumSeq: IndexedSeq[T] = seq.cumConcatLeft(group)
-
-    def subConcat(range: IRange): T = group.append(cumSeq(range.end), group.inv(cumSeq(range.begin)))
-  }
-
-  case class InstantSubSumSeq[T](seq: IndexedSeq[T])(implicit num: Numeric[T]) {
-    private val cumSum: IndexedSeq[T] = seq.cumSum
-
-    def subSum(range: IRange): T = num.minus(cumSum(range.end), cumSum(range.begin))
-  }
 }

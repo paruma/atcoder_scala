@@ -87,8 +87,7 @@ object Snippet {
 
     final case class NonRoot(parentIndex: Int) extends Node
 
-    // TODO ArrayBufferではなくArrayでいいはず
-    private val nodes: ArrayBuffer[Node] = ArrayBuffer.fill(n)(Root(count = 1, rank = 0))
+    private val nodes: Array[Node] = Array.fill(n)(Root(count = 1, rank = 0))
 
     private def rootNode(index: Int): (Int, Root) = {
       nodes(index) match {

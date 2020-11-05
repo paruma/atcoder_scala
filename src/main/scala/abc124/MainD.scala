@@ -29,6 +29,7 @@ object MainD {
       }
     }
     buf.append((currentCount, currentChar))
+
     buf.toIndexedSeq
   }
 
